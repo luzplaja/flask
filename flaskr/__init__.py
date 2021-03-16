@@ -56,12 +56,15 @@ def create_app(test_config=None):
     # @app.route() creates a simple route so you can see the application working before getting into the rest of
     # the tutorial. It creates a connection between the URL /hello and a function that returns a response,
     # the string 'Hello, World!' in this case.
+    
     from . import db
     db.init_app(app)
-    # Import and register the blueprint from the factory using
-    # app.register_blueprint(). Place the new code at the end of the factory
-    # function before returning the app.
+    
     from . import auth
     app.register_blueprint(auth.bp)
+    
+    from . import blog
+    app.register_blueprint(blog.bp)
+    app.add_url_rule('/', endpoint = 'index')
 
     return app
